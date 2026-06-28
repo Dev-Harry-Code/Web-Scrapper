@@ -1,26 +1,412 @@
 @import "tailwindcss";
 
+/* ===========================
+   Theme Variables
+=========================== */
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --radius-lg: 1rem;
+  --radius-md: .8rem;
+  --radius-sm: .6rem;
+}
+
+/* ===========================
+   Dark Theme
+=========================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+  --background: 222 47% 6%;
+  --foreground: 210 20% 98%;
+
+  --card: 222 40% 9%;
+  --card-foreground: 210 20% 98%;
+
+  --popover: 222 40% 9%;
+  --popover-foreground: 210 20% 98%;
+
+  --primary: 142 71% 45%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 222 20% 14%;
+  --secondary-foreground: 210 20% 96%;
+
+  --muted: 222 20% 13%;
+  --muted-foreground: 215 15% 68%;
+
+  --accent: 222 20% 14%;
+  --accent-foreground: 210 20% 96%;
+
+  --border: 222 20% 18%;
+  --input: 222 20% 18%;
+  --ring: 142 71% 45%;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ===========================
+   Base
+=========================== */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+
+  * {
+    @apply border-border;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+
+    @apply bg-background text-foreground antialiased;
+
+    min-height: 100vh;
+
+    background:
+      radial-gradient(circle at top,
+      rgba(22,163,74,.08),
+      transparent 40%),
+      #09090b;
+
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -.03em;
+  }
+
+  p {
+    color: rgb(212 212 216);
+  }
+
+  a {
+    transition: .2s ease;
+  }
+
+  button {
+    transition: .2s ease;
+  }
+
+  ::selection {
+
+    background:
+      rgb(34 197 94);
+
+    color:
+      white;
+  }
+
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ===========================
+   Scrollbar
+=========================== */
+
+::-webkit-scrollbar {
+
+  width: 10px;
+
+  height: 10px;
+
+}
+
+::-webkit-scrollbar-track {
+
+  background:
+    transparent;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+  background:
+    rgb(63 63 70);
+
+  border-radius:
+    999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+  background:
+    rgb(82 82 91);
+
+}
+
+/* Firefox */
+
+* {
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgb(82 82 91)
+    transparent;
+
+}
+
+/* ===========================
+   Inputs
+=========================== */
+
+input {
+
+  outline: none;
+
+}
+
+input::placeholder {
+
+  color:
+    rgb(113 113 122);
+
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.card-hover {
+
+  transition:
+    .25s ease;
+
+}
+
+.card-hover:hover {
+
+  transform:
+    translateY(-3px);
+
+}
+
+/* ===========================
+   Typography
+=========================== */
+
+.prose {
+
+  max-width: none;
+
+}
+
+.prose p {
+
+  margin-bottom: 1.15rem;
+
+  line-height: 1.9;
+
+}
+
+.prose h2 {
+
+  margin-top: 2rem;
+
+  margin-bottom: 1rem;
+
+}
+
+.prose h3 {
+
+  margin-top: 1.5rem;
+
+  margin-bottom: .75rem;
+
+}
+
+.prose ul {
+
+  margin: 1rem 0;
+
+  padding-left: 1.5rem;
+
+}
+
+.prose li {
+
+  margin-bottom: .5rem;
+
+  line-height: 1.8;
+
+}
+
+/* ===========================
+   Links
+=========================== */
+
+.report-link {
+
+  color:
+    rgb(74 222 128);
+
+}
+
+.report-link:hover {
+
+  color:
+    rgb(134 239 172);
+
+}
+
+/* ===========================
+   Fade Animation
+=========================== */
+
+@keyframes fadeUp {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(20px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+
+  }
+
+}
+
+.fade-up {
+
+  animation:
+    fadeUp
+    .45s
+    ease;
+
+}
+
+/* ===========================
+   Loading Pulse
+=========================== */
+
+@keyframes pulseSoft {
+
+  0% {
+
+    opacity: .55;
+
+  }
+
+  50% {
+
+    opacity: 1;
+
+  }
+
+  100% {
+
+    opacity: .55;
+
+  }
+
+}
+
+.loading {
+
+  animation:
+    pulseSoft
+    1.4s
+    infinite;
+
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+button:hover {
+
+  transform:
+    translateY(-1px);
+
+}
+
+button:active {
+
+  transform:
+    scale(.98);
+
+}
+
+/* ===========================
+   Glass Utility
+=========================== */
+
+.glass {
+
+  background:
+    rgba(23,23,23,.55);
+
+  backdrop-filter:
+    blur(16px);
+
+  border:
+    1px solid
+    rgba(255,255,255,.05);
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width:768px) {
+
+  body {
+
+    font-size: 15px;
+
+  }
+
+  h1 {
+
+    font-size: 2.4rem !important;
+
+  }
+
+  h2 {
+
+    font-size: 1.8rem !important;
+
+  }
+
 }
