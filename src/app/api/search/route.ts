@@ -14,7 +14,7 @@ export async function POST(req: Request) {
         'X-API-KEY': process.env.SERPER_API_KEY as string,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ q: query, num: 15 }), // Fetching top 5 results for brevity
+      body: JSON.stringify({ q: query, num: 15 }), // Fetching top 15 results for brevity
     });
 
     const data = await response.json();

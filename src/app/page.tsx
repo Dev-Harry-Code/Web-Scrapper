@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 
+// import icons from Lucide-React
 import {
   Search,
   Loader2,
   BrainCircuit,
 } from "lucide-react";
 
+// import UI components from ShadCN/ui
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -19,10 +21,7 @@ import { Label } from "@/components/ui/label";
 
 import ReportView from "@/components/ReportView";
 
-/* -------------------------------------------------------------------------- */
-/*                                   TYPES                                    */
-/* -------------------------------------------------------------------------- */
-
+// Define Types and Interfaces
 type SearchResult = {
   title: string;
   link: string;
@@ -55,8 +54,7 @@ export interface ResearchReport {
   references: Reference[];
 }
 
-/* -------------------------------------------------------------------------- */
-
+// Main Site Body for Rendering Components
 export default function Home() {
   const [query, setQuery] = useState("");
 
@@ -75,10 +73,8 @@ export default function Home() {
 
   const [isGenerating, setIsGenerating] = useState(false);
 
-  /* -------------------------------------------------------------------------- */
-  /*                               SEARCH HANDLER                               */
-  /* -------------------------------------------------------------------------- */
 
+// Search Handler Function to fetch search results
   async function handleSearch(
     e: React.FormEvent<HTMLFormElement>
   ) {
@@ -118,8 +114,8 @@ export default function Home() {
 
       setSearchResults(results);
 
-      /* -------------------------- AUTOMATIC MODE -------------------------- */
 
+      // Automatic Mode condition
       if (
         mode === "auto" &&
         results.length > 0
@@ -142,10 +138,7 @@ export default function Home() {
     }
   }
 
-  /* -------------------------------------------------------------------------- */
-  /*                              TOGGLE CHECKBOX                               */
-  /* -------------------------------------------------------------------------- */
-
+  // Manual Toggle checkbox ux
   function toggleSelection(url: string) {
     const next = new Set(selectedUrls);
 
@@ -158,10 +151,8 @@ export default function Home() {
     setSelectedUrls(next);
   }
 
-  /* -------------------------------------------------------------------------- */
-  /*                              GENERATE REPORT                               */
-  /* -------------------------------------------------------------------------- */
-
+  
+  // Report Generation System --> API callback ==> Backend APIs
   async function generateReport(
     autoUrls?: string[],
     autoSearchResults?: SearchResult[]
@@ -217,8 +208,7 @@ export default function Home() {
     }
   }
 
-  /* -------------------------------------------------------------------------- */
-
+  // Search Reset --> New Search
   function resetSearch() {
     setQuery("");
 
@@ -228,46 +218,29 @@ export default function Home() {
 
     setSelectedUrls(new Set());
   }
-
-  /* ============================
-     PART 2 STARTS BELOW
-  ============================ */
-
+  
   return (
         <main className="min-h-screen bg-neutral-950 text-white">
       <div className="mx-auto max-w-6xl px-6 py-12">
-
-        {/* ================= HERO ================= */}
-
+        {/* Hero Section */}
         <section className="mx-auto max-w-4xl">
-
           <div className="space-y-5 text-center">
-
             <span className="inline-flex items-center rounded-full border border-green-600/30 bg-green-500/10 px-4 py-1 text-sm text-green-400">
               Ultimate Research Engine
             </span>
-
             <div className="relative flex items-center justify-center">
-
               <div className="absolute h-20 w-52 rounded-full bg-green-400/15 blur-xl" />
-
               <h1 className="relative text-5xl font-extrabold italic tracking-tight">
                 Scrappy
               </h1>
-
             </div>
-
             <p className="mx-auto max-w-2xl leading-7 text-neutral-400">
               Search the web, analyze trusted sources seemlessly, and generate
               comprehensive research reports in seconds.
             </p>
-
           </div>
-
-          {/* ================= MODE ================= */}
-
+          {/* Search Mode Selection Window */}
           <div className="mt-10 mb-6 flex justify-center">
-
             <RadioGroup
               value={mode}
               onValueChange={(value) =>
@@ -280,7 +253,6 @@ export default function Home() {
                   value="auto"
                   id="auto"
                 />
-
                 <Label
                   htmlFor="auto"
                   className="cursor-pointer"
@@ -288,13 +260,11 @@ export default function Home() {
                   Automatic
                 </Label>
               </div>
-
               <div className="flex items-center space-x-2">
                 <RadioGroupItem
                   value="manual"
                   id="manual"
                 />
-
                 <Label
                   htmlFor="manual"
                   className="cursor-pointer"
@@ -303,20 +273,14 @@ export default function Home() {
                 </Label>
               </div>
             </RadioGroup>
-
           </div>
-
-          {/* ================= SEARCH ================= */}
-
+          {/* Search-box Form */}
           <form
             onSubmit={handleSearch}
             className="mx-auto mt-12 max-w-4xl"
           >
-
             <div className="flex items-center rounded-2xl border border-neutral-800 bg-neutral-900 px-3 py-3 transition-colors focus-within:border-green-500">
-
               <Search className="ml-2 mr-4 h-5 w-5 text-neutral-500" />
-
               <Input
                 value={query}
                 onChange={(e) =>
@@ -325,7 +289,6 @@ export default function Home() {
                 placeholder="Search anything..."
                 className="mr-5 h-12 flex-1 border-0 bg-transparent px-5 text-lg shadow-none placeholder:text-neutral-500 focus-visible:ring-0"
               />
-
               <Button
                 type="submit"
                 disabled={
@@ -339,36 +302,24 @@ export default function Home() {
                   "Search"
                 )}
               </Button>
-
             </div>
-
           </form>
-
         </section>
-
-        {/* ================= MANUAL SEARCH RESULTS ================= */}
-
+        {/* Manual Search results */}
         {mode === "manual" &&
           searchResults.length > 0 &&
           !report &&
           !isGenerating && (
-
             <section className="mt-14">
-
               <div className="mb-8 flex items-center justify-between">
-
                 <div>
-
                   <h2 className="text-2xl font-semibold">
                     Search Results
                   </h2>
-
                   <p className="mt-1 text-sm text-neutral-400">
                     Choose the webpages you want Scrappy to analyze.
                   </p>
-
                 </div>
-
                 <Button
                   onClick={() => generateReport()}
                   disabled={
@@ -377,31 +328,22 @@ export default function Home() {
                   className="gap-2"
                 >
                   <BrainCircuit className="h-4 w-4" />
-
                   Generate Report
-
                   {selectedUrls.size > 0 && (
                     <span className="rounded bg-white/10 px-2 py-0.5 text-xs">
                       {selectedUrls.size}
                     </span>
                   )}
-
                 </Button>
-
               </div>
-
               <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
-
                 {searchResults.map(
                   (result, index) => {
-
                     const checked =
                       selectedUrls.has(
                         result.link
                       );
-
                     return (
-
                       <label
                         key={index}
                         htmlFor={`source-${index}`}
@@ -411,7 +353,6 @@ export default function Home() {
                             : "hover:bg-neutral-800/60"
                         }`}
                       >
-
                         <Checkbox
                           id={`source-${index}`}
                           checked={checked}
@@ -422,17 +363,13 @@ export default function Home() {
                           }
                           className="mt-1"
                         />
-
                         <div className="min-w-0 flex-1">
-
                           <h3 className="text-lg font-semibold leading-6">
                             {result.title}
                           </h3>
-
                           <p className="mt-2 line-clamp-2 text-sm leading-6 text-neutral-400">
                             {result.snippet}
                           </p>
-
                           <a
                             href={result.link}
                             target="_blank"
@@ -444,86 +381,55 @@ export default function Home() {
                           >
                             {result.link}
                           </a>
-
                         </div>
-
                       </label>
-
                     );
                   }
                 )}
-
               </div>
-
             </section>
-
           )}
-
-        {/* ================= PART 3 STARTS HERE ================= */}
-                {/* ================= GENERATING ================= */}
-
+        {/* Report Generation Overlay Window */}
         {isGenerating && (
           <section className="mt-20">
-
             <div className="mx-auto flex max-w-2xl flex-col items-center rounded-3xl border border-neutral-800 bg-neutral-900 px-10 py-16 text-center">
-
               <Loader2 className="mb-6 h-10 w-10 animate-spin text-green-500" />
-
               <h2 className="text-2xl font-semibold">
                 {mode === "auto"
                   ? "Researching the Web"
                   : "Generating Report"}
               </h2>
-
               <p className="mt-4 max-w-lg leading-7 text-neutral-400">
                 {mode === "auto"
                   ? "Searching, ranking trustworthy sources, scraping webpages, and generating a structured research report..."
                   : "Reading your selected webpages and organizing everything into a comprehensive structured research report."}
               </p>
-
             </div>
-
           </section>
         )}
-
-        {/* ================= REPORT ================= */}
-
+        {/* Final Processed Report Section */}
         {report && !isGenerating && (
-
           <section className="mt-16">
-
             <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-
               <div className="flex gap-3">
-
                 <Button
                   variant="outline"
                   onClick={() => setReport(null)}
                 >
                   Back
                 </Button>
-
                 <Button
                   variant="destructive"
                   onClick={resetSearch}
                 >
                   New Search
                 </Button>
-
               </div>
-
             </div>
-
             <ReportView report={report} />
-
           </section>
-
         )}
-
       </div>
-
     </main>
-
   );
-
 }
